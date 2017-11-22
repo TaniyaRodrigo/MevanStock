@@ -5,6 +5,19 @@
  */
 package javaapplication3;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Induwara Jayalath
@@ -37,13 +50,18 @@ public class Login_interface extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(204, 204, 255));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("UserName");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 65, -1, -1));
 
         jLabel2.setText("Password");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 108, -1, -1));
 
         jLabel3.setText("Master Audio");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 20, -1, -1));
 
         Login_button.setText("Login");
         Login_button.addActionListener(new java.awt.event.ActionListener() {
@@ -51,6 +69,7 @@ public class Login_interface extends javax.swing.JFrame {
                 Login_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(Login_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 156, -1, -1));
 
         Clear_button.setText("Clear");
         Clear_button.addActionListener(new java.awt.event.ActionListener() {
@@ -58,68 +77,24 @@ public class Login_interface extends javax.swing.JFrame {
                 Clear_buttonActionPerformed(evt);
             }
         });
+        getContentPane().add(Clear_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 156, -1, -1));
 
         UserName_field.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UserName_fieldActionPerformed(evt);
             }
         });
+        getContentPane().add(UserName_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 62, 122, -1));
 
         Password_field.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Password_fieldActionPerformed(evt);
             }
         });
+        getContentPane().add(Password_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 105, 122, -1));
 
-        jLabel4.setText("© IL System Solutions");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Clear_button)
-                        .addGap(18, 18, 18)
-                        .addComponent(Login_button))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(UserName_field, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Password_field, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)))
-                .addContainerGap(42, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(121, 121, 121))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel3)
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(UserName_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(Password_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Login_button)
-                    .addComponent(Clear_button))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jLabel4))
-        );
+        jLabel4.setText("© IL System Solutions 2017");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 186, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -129,8 +104,8 @@ public class Login_interface extends javax.swing.JFrame {
     }//GEN-LAST:event_UserName_fieldActionPerformed
 
     private void Password_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Password_fieldActionPerformed
-        Login_buttonActionPerformed(evt); 
-        
+        Login_buttonActionPerformed(evt);
+
     }//GEN-LAST:event_Password_fieldActionPerformed
 
     private void Clear_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Clear_buttonActionPerformed
@@ -140,7 +115,59 @@ public class Login_interface extends javax.swing.JFrame {
     }//GEN-LAST:event_Clear_buttonActionPerformed
 
     private void Login_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_buttonActionPerformed
-        // TODO add your handling code here:
+        try {
+            String LoginLogsFilepath = "C:\\Users\\Induwara Jayalath\\Documents\\MevanStock\\LoginLogs.txt";
+            Connection conn = dataBaseConnection.dataBaseConnectionMethod();
+            Statement stmt = conn.createStatement();
+            String query = "select * from usernames";
+            ResultSet rs = stmt.executeQuery(query);
+
+            String un = UserName_field.getText();
+            String pw = String.valueOf(Password_field.getPassword());
+            String msg = "hi";
+            Date d = new Date();
+
+            while (rs.next()) {
+                String u = rs.getString("userName");
+                String p = rs.getString("userPassword");
+                int t = rs.getInt("userType");
+
+                if ((un.equalsIgnoreCase(u)) && (pw.equals(p))) {
+
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(LoginLogsFilepath, true));
+                    String text = "username :" + un + " logged in time :" + d.toString();
+                    bw.write(text);
+                    bw.newLine();
+                    bw.close();
+
+                    switch (t) {
+                        case 1:
+//                            UserMysystem.admin_no = 1;
+                            MainInterface ms = new MainInterface();
+                            ms.setVisible(true);
+                            this.dispose();
+                            break;
+
+                        default:
+//                           UserMysystem.admin_no = 0;
+                            MainInterface ms2 = new MainInterface();
+                            ms2.setVisible(true);
+                            this.dispose();
+                            break;
+
+                    }
+                    msg = "welcome " + un;
+                    break;
+                } else {
+                    msg = "Invalid Un or PW";
+                }
+
+            }
+            JOptionPane.showMessageDialog(this, msg);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_Login_buttonActionPerformed
 
     /**
