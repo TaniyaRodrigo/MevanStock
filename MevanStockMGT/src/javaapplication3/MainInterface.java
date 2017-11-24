@@ -5,6 +5,16 @@
  */
 package javaapplication3;
 
+import java.awt.CardLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
+import org.eclipse.persistence.internal.xr.Util;
+
 /**
  *
  * @author Induwara Jayalath
@@ -16,6 +26,7 @@ public class MainInterface extends javax.swing.JFrame {
      */
     public MainInterface() {
         initComponents();
+        showpanel("card2");
     }
 
     /**
@@ -26,32 +37,81 @@ public class MainInterface extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("mevanstock?zeroDateTimeBehavior=convertToNullPU").createEntityManager();
+        peopleQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM People p");
+        peopleList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : peopleQuery.getResultList();
+        ordertempQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT o FROM Ordertemp o");
+        ordertempList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : ordertempQuery.getResultList();
         MainMenu_panel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Get_button = new javax.swing.JButton();
+        Put_button = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        ExitButton = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         Menu_Panel = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        Welcome = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        get = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        itemId_textbox = new javax.swing.JTextField();
+        itemQuantity_textbox = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        messege_label_getWindow = new javax.swing.JLabel();
+        Submit_button_get = new javax.swing.JButton();
+        put = new javax.swing.JPanel();
+        Stock = new javax.swing.JPanel();
+        Check_ppl = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         MainMenu_panel.setBackground(new java.awt.Color(204, 204, 255));
 
-        jButton1.setText("jButton1");
+        Get_button.setText("Get");
+        Get_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Get_buttonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("jButton2");
+        Put_button.setText("Put");
+        Put_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Put_buttonActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Stock");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("jButton4");
+        jButton4.setText("Check People");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("jButton5");
+        ExitButton.setText("Exit");
+        ExitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitButtonActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Admin Panel");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout MainMenu_panelLayout = new javax.swing.GroupLayout(MainMenu_panel);
         MainMenu_panel.setLayout(MainMenu_panelLayout);
@@ -59,94 +119,288 @@ public class MainInterface extends javax.swing.JFrame {
             MainMenu_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainMenu_panelLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jButton1)
+                .addComponent(Get_button)
                 .addGap(31, 31, 31)
-                .addComponent(jButton2)
+                .addComponent(Put_button)
                 .addGap(35, 35, 35)
                 .addComponent(jButton3)
                 .addGap(39, 39, 39)
                 .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
-                .addComponent(jButton5)
-                .addGap(27, 27, 27))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
+                .addComponent(jButton2))
+            .addGroup(MainMenu_panelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(ExitButton))
         );
         MainMenu_panelLayout.setVerticalGroup(
             MainMenu_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainMenu_panelLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(MainMenu_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addComponent(ExitButton)
+                .addGroup(MainMenu_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MainMenu_panelLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(MainMenu_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Get_button)
+                            .addComponent(Put_button)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4)))
+                    .addGroup(MainMenu_panelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         getContentPane().add(MainMenu_panel, java.awt.BorderLayout.PAGE_START);
 
         Menu_Panel.setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jLabel1.setText("Welcome");
+
+        javax.swing.GroupLayout WelcomeLayout = new javax.swing.GroupLayout(Welcome);
+        Welcome.setLayout(WelcomeLayout);
+        WelcomeLayout.setHorizontalGroup(
+            WelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(WelcomeLayout.createSequentialGroup()
+                .addGap(309, 309, 309)
+                .addComponent(jLabel1)
+                .addContainerGap(327, Short.MAX_VALUE))
+        );
+        WelcomeLayout.setVerticalGroup(
+            WelcomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(WelcomeLayout.createSequentialGroup()
+                .addGap(166, 166, 166)
+                .addComponent(jLabel1)
+                .addContainerGap(212, Short.MAX_VALUE))
+        );
+
+        Menu_Panel.add(Welcome, "card2");
+
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, peopleList, jComboBox1);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        itemId_textbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemId_textboxActionPerformed(evt);
+            }
+        });
+
+        itemQuantity_textbox.setText("1");
+        itemQuantity_textbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemQuantity_textboxActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Add");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, ordertempList, jTable1);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${itemId}"));
+        columnBinding.setColumnName("Item Id");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${itemName}"));
+        columnBinding.setColumnName("Item Name");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${itemQuantity}"));
+        columnBinding.setColumnName("Item Quantity");
+        columnBinding.setColumnClass(Integer.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+
+        jScrollPane1.setViewportView(jTable1);
+
+        Submit_button_get.setText("Submit");
+        Submit_button_get.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Submit_button_getActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout getLayout = new javax.swing.GroupLayout(get);
+        get.setLayout(getLayout);
+        getLayout.setHorizontalGroup(
+            getLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(getLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addGroup(getLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(getLayout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Submit_button_get))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(getLayout.createSequentialGroup()
+                        .addComponent(itemId_textbox, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(itemQuantity_textbox, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(messege_label_getWindow)))
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+        getLayout.setVerticalGroup(
+            getLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(getLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(getLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(itemId_textbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemQuantity_textbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(messege_label_getWindow))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(getLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Submit_button_get))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        Menu_Panel.add(get, "card3");
+
+        javax.swing.GroupLayout putLayout = new javax.swing.GroupLayout(put);
+        put.setLayout(putLayout);
+        putLayout.setHorizontalGroup(
+            putLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 679, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+        putLayout.setVerticalGroup(
+            putLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 392, Short.MAX_VALUE)
         );
 
-        Menu_Panel.add(jPanel1, "card2");
+        Menu_Panel.add(put, "card4");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout StockLayout = new javax.swing.GroupLayout(Stock);
+        Stock.setLayout(StockLayout);
+        StockLayout.setHorizontalGroup(
+            StockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 679, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+        StockLayout.setVerticalGroup(
+            StockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 392, Short.MAX_VALUE)
         );
 
-        Menu_Panel.add(jPanel2, "card3");
+        Menu_Panel.add(Stock, "card5");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout Check_pplLayout = new javax.swing.GroupLayout(Check_ppl);
+        Check_ppl.setLayout(Check_pplLayout);
+        Check_pplLayout.setHorizontalGroup(
+            Check_pplLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 679, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+        Check_pplLayout.setVerticalGroup(
+            Check_pplLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 392, Short.MAX_VALUE)
         );
 
-        Menu_Panel.add(jPanel3, "card4");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 679, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
-        );
-
-        Menu_Panel.add(jPanel4, "card5");
+        Menu_Panel.add(Check_ppl, "card6");
 
         getContentPane().add(Menu_Panel, java.awt.BorderLayout.CENTER);
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void Put_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Put_buttonActionPerformed
+        showpanel("card4");        // TODO add your handling code here:
+    }//GEN-LAST:event_Put_buttonActionPerformed
+
+    private void Get_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Get_buttonActionPerformed
+        showpanel("card3");
+        try {
+            String cquery = "TRUNCATE TABLE ordertemp";
+            Statement cstatmnt = dataBaseConnection.dataBaseConnectionMethod().createStatement();
+            cstatmnt.executeUpdate(cquery);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }// TODO add your handling code here:
+    }//GEN-LAST:event_Get_buttonActionPerformed
+
+    private void ExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitButtonActionPerformed
+        System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_ExitButtonActionPerformed
+
+    private void itemId_textboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemId_textboxActionPerformed
+        itemQuantity_textbox.requestFocus();
+        itemQuantity_textbox.selectAll();        // TODO add your handling code here:
+    }//GEN-LAST:event_itemId_textboxActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            messege_label_getWindow.setText(null);
+            int itemIDthis = Integer.parseInt(itemId_textbox.getText());
+            int itemQuantitythis = Integer.parseInt(itemQuantity_textbox.getText());
+            Connection con = dataBaseConnection.dataBaseConnectionMethod();
+            PreparedStatement statement = con.prepareStatement(
+                    "SELECT itemQuantity from items WHERE  itemID =" + itemIDthis);
+            ResultSet rs;
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                int x = rs.getInt(1);
+                System.out.println(x);
+                if (x > itemQuantitythis) {
+                    String query = " insert into orderTemp values (?, (select itemName from items where itemID = ?), ?)";
+                    PreparedStatement preparedStmt = con.prepareStatement(query);
+                    preparedStmt.setInt(1, itemIDthis);
+                    preparedStmt.setInt(2, itemIDthis);
+                    preparedStmt.setInt(3, itemQuantitythis);
+                    preparedStmt.execute();
+                    preparedStmt.close();
+                    itemId_textbox.setText(null);
+                    itemQuantity_textbox.setText(null);
+                    messege_label_getWindow.setText("succesfully added");
+                } else {
+                    messege_label_getWindow.setText("Quantity not sufficiant");
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }           // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void itemQuantity_textboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemQuantity_textboxActionPerformed
+
+        jButton1ActionPerformed(evt);   // TODO add your handling code here:
+    }//GEN-LAST:event_itemQuantity_textboxActionPerformed
+
+    private void Submit_button_getActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Submit_button_getActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Submit_button_getActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        showpanel("card5");        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        showpanel("card6");        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (admin_no == 1) {
+            Admin_panel ms3 = new Admin_panel();
+            ms3.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "You are not an Admin");
+        }// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
+    public void showpanel(String cname) {
+        CardLayout cL = (CardLayout) Menu_Panel.getLayout();
+        cL.show(Menu_Panel, cname);
+    }
+
+    public static int admin_no = 1;
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -180,16 +434,33 @@ public class MainInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Check_ppl;
+    private javax.swing.JButton ExitButton;
+    private javax.swing.JButton Get_button;
     private javax.swing.JPanel MainMenu_panel;
     private javax.swing.JPanel Menu_Panel;
+    private javax.swing.JButton Put_button;
+    private javax.swing.JPanel Stock;
+    private javax.swing.JButton Submit_button_get;
+    private javax.swing.JPanel Welcome;
+    private javax.persistence.EntityManager entityManager;
+    private javax.swing.JPanel get;
+    private javax.swing.JTextField itemId_textbox;
+    private javax.swing.JTextField itemQuantity_textbox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel messege_label_getWindow;
+    private java.util.List<javaapplication3.Ordertemp> ordertempList;
+    private javax.persistence.Query ordertempQuery;
+    private java.util.List<javaapplication3.People> peopleList;
+    private javax.persistence.Query peopleQuery;
+    private javax.swing.JPanel put;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
