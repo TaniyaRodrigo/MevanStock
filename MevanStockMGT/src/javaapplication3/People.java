@@ -34,8 +34,8 @@ import javax.persistence.Transient;
     @NamedQuery(name = "People.findByPeopleName", query = "SELECT p FROM People p WHERE p.peopleName = :peopleName"),
     @NamedQuery(name = "People.findByPeopleNIC", query = "SELECT p FROM People p WHERE p.peopleNIC = :peopleNIC"),
     @NamedQuery(name = "People.findByPeopleTP", query = "SELECT p FROM People p WHERE p.peopleTP = :peopleTP"),
-    @NamedQuery(name = "People.findByPeopleStatus", query = "SELECT p FROM People p WHERE p.peopleStatus = :peopleStatus"),
-    @NamedQuery(name = "People.findByDateRemoved", query = "SELECT p FROM People p WHERE p.dateRemoved = :dateRemoved")})
+    @NamedQuery(name = "People.findByDateRemoved", query = "SELECT p FROM People p WHERE p.dateRemoved = :dateRemoved"),
+    @NamedQuery(name = "People.findByDateAdded", query = "SELECT p FROM People p WHERE p.dateAdded = :dateAdded")})
 public class People implements Serializable {
 
     @Transient
@@ -51,15 +51,15 @@ public class People implements Serializable {
     @Column(name = "peopleName")
     private String peopleName;
     @Column(name = "peopleNIC")
-    private Character peopleNIC;
+    private String peopleNIC;
     @Column(name = "peopleTP")
     private Integer peopleTP;
-    @Basic(optional = false)
-    @Column(name = "peopleStatus")
-    private int peopleStatus;
     @Column(name = "dateRemoved")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateRemoved;
+    @Column(name = "dateAdded")
+    @Temporal(TemporalType.DATE)
+    private Date dateAdded;
 
     public People() {
     }
@@ -68,10 +68,9 @@ public class People implements Serializable {
         this.idpeople = idpeople;
     }
 
-    public People(Integer idpeople, String peopleName, int peopleStatus) {
+    public People(Integer idpeople, String peopleName) {
         this.idpeople = idpeople;
         this.peopleName = peopleName;
-        this.peopleStatus = peopleStatus;
     }
 
     public Integer getIdpeople() {
@@ -94,12 +93,12 @@ public class People implements Serializable {
         changeSupport.firePropertyChange("peopleName", oldPeopleName, peopleName);
     }
 
-    public Character getPeopleNIC() {
+    public String getPeopleNIC() {
         return peopleNIC;
     }
 
-    public void setPeopleNIC(Character peopleNIC) {
-        Character oldPeopleNIC = this.peopleNIC;
+    public void setPeopleNIC(String peopleNIC) {
+        String oldPeopleNIC = this.peopleNIC;
         this.peopleNIC = peopleNIC;
         changeSupport.firePropertyChange("peopleNIC", oldPeopleNIC, peopleNIC);
     }
@@ -114,16 +113,6 @@ public class People implements Serializable {
         changeSupport.firePropertyChange("peopleTP", oldPeopleTP, peopleTP);
     }
 
-    public int getPeopleStatus() {
-        return peopleStatus;
-    }
-
-    public void setPeopleStatus(int peopleStatus) {
-        int oldPeopleStatus = this.peopleStatus;
-        this.peopleStatus = peopleStatus;
-        changeSupport.firePropertyChange("peopleStatus", oldPeopleStatus, peopleStatus);
-    }
-
     public Date getDateRemoved() {
         return dateRemoved;
     }
@@ -132,6 +121,16 @@ public class People implements Serializable {
         Date oldDateRemoved = this.dateRemoved;
         this.dateRemoved = dateRemoved;
         changeSupport.firePropertyChange("dateRemoved", oldDateRemoved, dateRemoved);
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        Date oldDateAdded = this.dateAdded;
+        this.dateAdded = dateAdded;
+        changeSupport.firePropertyChange("dateAdded", oldDateAdded, dateAdded);
     }
 
     @Override
@@ -156,7 +155,7 @@ public class People implements Serializable {
 
     @Override
     public String toString() {
-        return peopleName;
+        return "javaapplication3.People[ idpeople=" + idpeople + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

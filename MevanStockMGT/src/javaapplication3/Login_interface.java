@@ -131,6 +131,7 @@ public class Login_interface extends javax.swing.JFrame {
                 String u = rs.getString("userName");
                 String p = rs.getString("userPassword");
                 int t = rs.getInt("userType");
+                int id = rs.getInt("ID");
 
                 if ((un.equalsIgnoreCase(u)) && (pw.equals(p))) {
 
@@ -142,14 +143,14 @@ public class Login_interface extends javax.swing.JFrame {
 
                     switch (t) {
                         case 1:
-//                            UserMysystem.admin_no = 1;
+                            Admin_panel.current_User_level = 1;
                             MainInterface ms = new MainInterface();
                             ms.setVisible(true);
                             this.dispose();
                             break;
 
                         default:
-//                           UserMysystem.admin_no = 0;
+                            Admin_panel.current_User_level = 0;
                             MainInterface ms2 = new MainInterface();
                             ms2.setVisible(true);
                             this.dispose();
@@ -157,6 +158,7 @@ public class Login_interface extends javax.swing.JFrame {
 
                     }
                     msg = "welcome " + un;
+                    Admin_panel.current_User = id;
                     break;
                 } else {
                     msg = "Invalid Un or PW";

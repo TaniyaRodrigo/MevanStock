@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +25,9 @@ public class Admin_panel extends javax.swing.JFrame {
     public Admin_panel() {
         initComponents();
     }
+
+    public static int current_User = 0;
+    public static int current_User_level = 0;
 
     public void showpanel(String cname) {
         CardLayout cL = (CardLayout) menu_panel.getLayout();
@@ -46,6 +50,12 @@ public class Admin_panel extends javax.swing.JFrame {
         itemsList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : itemsQuery.getResultList();
         peopleQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM People p");
         peopleList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : peopleQuery.getResultList();
+        peopleQuery1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM People p");
+        peopleList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : peopleQuery1.getResultList();
+        peopleQuery2 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM People p");
+        peopleList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : peopleQuery2.getResultList();
+        peopleQuery3 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM People p");
+        peopleList3 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : peopleQuery3.getResultList();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -53,7 +63,7 @@ public class Admin_panel extends javax.swing.JFrame {
         menu_panel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable1_items = new javax.swing.JTable();
         ID_field = new javax.swing.JTextField();
         Name_field = new javax.swing.JTextField();
         Quantity_field = new javax.swing.JTextField();
@@ -68,6 +78,7 @@ public class Admin_panel extends javax.swing.JFrame {
         Delete_butt = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         Description_field = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         Name_ppl_Field = new javax.swing.JTextField();
         NIC_ppl_Field = new javax.swing.JTextField();
@@ -136,7 +147,7 @@ public class Admin_panel extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 102));
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, itemsList, jTable1);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, itemsList, jTable1_items);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${itemID}"));
         columnBinding.setColumnName("Item ID");
         columnBinding.setColumnClass(Integer.class);
@@ -154,8 +165,18 @@ public class Admin_panel extends javax.swing.JFrame {
         columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
+        jTable1_items.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1_itemsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1_items);
 
-        jScrollPane1.setViewportView(jTable1);
+        Quantity_field.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Quantity_fieldActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("ID");
 
@@ -168,14 +189,30 @@ public class Admin_panel extends javax.swing.JFrame {
         jLabel5.setText("Description");
 
         Insert_butt.setText("Insert");
+        Insert_butt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Insert_buttActionPerformed(evt);
+            }
+        });
 
         Update_butt.setText("Update");
+        Update_butt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Update_buttActionPerformed(evt);
+            }
+        });
 
         Delete_butt.setBackground(new java.awt.Color(255, 51, 51));
         Delete_butt.setText("Delete");
+        Delete_butt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Delete_buttActionPerformed(evt);
+            }
+        });
 
-        Description_field.setColumns(20);
-        Description_field.setRows(5);
+        Description_field.setColumns(10);
+        Description_field.setRows(3);
+        Description_field.setTabSize(5);
         jScrollPane2.setViewportView(Description_field);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -202,7 +239,9 @@ public class Admin_panel extends javax.swing.JFrame {
                             .addComponent(Insert_butt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Update_butt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Delete_butt, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(73, 73, 73))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addGap(35, 35, 35))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,18 +270,20 @@ public class Admin_panel extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(Insert_butt)
                         .addGap(18, 18, 18)
-                        .addComponent(Update_butt)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Update_butt)
+                            .addComponent(jLabel6))
                         .addGap(18, 18, 18)
                         .addComponent(Delete_butt))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         menu_panel.add(jPanel3, "card2");
@@ -262,17 +303,22 @@ public class Admin_panel extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, peopleList3, jTable2);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${peopleName}"));
+        columnBinding.setColumnName("People Name");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${peopleNIC}"));
+        columnBinding.setColumnName("People NIC");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${peopleTP}"));
+        columnBinding.setColumnName("People TP");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dateAdded}"));
+        columnBinding.setColumnName("Date Added");
+        columnBinding.setColumnClass(java.util.Date.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+
         jScrollPane3.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -345,7 +391,8 @@ public class Admin_panel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        showpanel("card2");        // TODO add your handling code here:
+        showpanel("card2");
+        jLabel6.setText(null);// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -361,31 +408,146 @@ public class Admin_panel extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void ADD_ppl_buttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD_ppl_buttActionPerformed
-        Connection con = dataBaseConnection.dataBaseConnectionMethod();
-        String query = " insert into people values (null, ?, ?,?,null,?)";
-        PreparedStatement preparedStmt;
+        if (!"".equals(Name_ppl_Field.toString())) {
+            Connection con = dataBaseConnection.dataBaseConnectionMethod();
+            String query = " insert into people values (null,?,?,?,null,?)";
+            PreparedStatement preparedStmt;
+            try {
+                preparedStmt = con.prepareStatement(query);
+                preparedStmt.setString(1, Name_ppl_Field.getText());
+                preparedStmt.setString(2, NIC_ppl_Field.getText());
+                preparedStmt.setInt(3, Integer.parseInt(Telephne_ppl_Field.getText()));
+                preparedStmt.setDate(4, java.sql.Date.valueOf(java.time.LocalDate.now()));
+                preparedStmt.execute();
+                preparedStmt.close();
+                Messege_ppl_add.setText("Successfully added");
+                Name_ppl_Field.setText(null);
+                NIC_ppl_Field.setText(null);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Admin_panel.class.getName()).log(Level.SEVERE, null, ex);
+                Messege_ppl_add.setText("Error occurd");
+                Name_ppl_Field.setText(null);
+            }
+        } else {
+            System.out.println("Error");
+        }      // TODO add your handling code here:
+    }//GEN-LAST:event_ADD_ppl_buttActionPerformed
+
+    private void Insert_buttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Insert_buttActionPerformed
+        String SQLStat = "INSERT INTO items"
+                + "(`itemID`,"
+                + "`itemName`,"
+                + "`itemQuantity`,"
+                + "`itemWarrentyEndDate`,"
+                + "`itemDescription`,"
+                + "`itemAddedBy`)"
+                + "VALUES(?,?,?,?,?,?);";
+
         try {
-            preparedStmt = con.prepareStatement(query);
-            preparedStmt.setString(1, Name_ppl_Field.getText());
-            preparedStmt.setString(2, NIC_ppl_Field.getText());
-            preparedStmt.setInt(3, Integer.parseInt(Telephne_ppl_Field.getText()));
-            preparedStmt.setDate(4, java.sql.Date.valueOf(java.time.LocalDate.now()));
-            preparedStmt.execute();
-            preparedStmt.close();
-            Messege_ppl_add.setText("Successfully added");
-            Name_ppl_Field.setText(null);
-            NIC_ppl_Field.setText(null);
+            PreparedStatement stmt = dataBaseConnection.dataBaseConnectionMethod().prepareStatement(SQLStat);
+            stmt.setInt(1, Integer.parseInt(ID_field.getText()));
+            stmt.setString(2, Name_field.getText());
+
+            stmt.setInt(3, Integer.parseInt(Quantity_field.getText()));
+            if (Warrenty_field.getText().equalsIgnoreCase("")) {
+                stmt.setString(4, null);
+            } else {
+                stmt.setString(4, Warrenty_field.getText());
+            }
+            if (Description_field.getText().equalsIgnoreCase("")) {
+                stmt.setString(5, null);
+            } else {
+                stmt.setString(5, Description_field.getText());
+            }
+            stmt.setInt(6, current_User);
+
+            stmt.execute();
+            stmt.close();
+            JOptionPane.showMessageDialog(this, "Done");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error");
+            System.out.println(e.getMessage());
+        }
+        clear_Fields();
+    }//GEN-LAST:event_Insert_buttActionPerformed
+
+    private void jTable1_itemsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1_itemsMouseClicked
+        try {
+            int row = jTable1_items.getSelectedRow();
+            ID_field.setText(jTable1_items.getModel().getValueAt(row, 0).toString());
+            Name_field.setText(jTable1_items.getModel().getValueAt(row, 1).toString());
+            Quantity_field.setText(jTable1_items.getModel().getValueAt(row, 2).toString());
+            Warrenty_field.setText(jTable1_items.getModel().getValueAt(row, 3).toString());
+            Description_field.setText(jTable1_items.getModel().getValueAt(row, 4).toString());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }//GEN-LAST:event_jTable1_itemsMouseClicked
+
+    private void Update_buttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Update_buttActionPerformed
+        String SQLStat = "UPDATE items SET itemName = ? , itemQuantity = ? , itemWarrentyEndDate = ? , "
+                + " itemDescription = ? WHERE itemID=?;";
+
+        try {
+            PreparedStatement stmt = dataBaseConnection.dataBaseConnectionMethod().prepareStatement(SQLStat);
+            stmt.setString(1, Name_field.getText());
+
+            stmt.setInt(2, Integer.parseInt(Quantity_field.getText()));
+            if (Warrenty_field.getText().equalsIgnoreCase("")) {
+                stmt.setString(3, null);
+            } else {
+                stmt.setString(3, Warrenty_field.getText());
+            }
+            if (Description_field.getText().equalsIgnoreCase("")) {
+                stmt.setString(4, null);
+            } else {
+                stmt.setString(4, Description_field.getText());
+            }
+            stmt.setInt(5, Integer.parseInt(ID_field.getText()));
+            stmt.execute();
+            stmt.close();
+            JOptionPane.showMessageDialog(this, "Done");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error");
+            System.out.println(e.getMessage());
+        }
+        clear_Fields();
+    }//GEN-LAST:event_Update_buttActionPerformed
+
+    private void Quantity_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Quantity_fieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Quantity_fieldActionPerformed
+
+    private void Delete_buttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Delete_buttActionPerformed
+        String SQLStat = "UPDATE items SET itemStatus=\"DELETED\" WHERE itemID=?;";
+        PreparedStatement stmt;
+        try {
+            stmt = dataBaseConnection.dataBaseConnectionMethod().prepareStatement(SQLStat);
+            stmt.setInt(1, Integer.parseInt(ID_field.getText()));
+            stmt.execute();
+            stmt.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(Admin_panel.class.getName()).log(Level.SEVERE, null, ex);
-            Messege_ppl_add.setText("Error occurd");
-            Name_ppl_Field.setText(null);
-        }       // TODO add your handling code here:
-    }//GEN-LAST:event_ADD_ppl_buttActionPerformed
+        }
+        clear_Fields();
+    }//GEN-LAST:event_Delete_buttActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    void clear_Fields() {
+        ID_field.setText(null);
+        Name_field.setText(null);
+        Quantity_field.setText(null);
+        Warrenty_field.setText(null);
+        Description_field.setText(null);
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -444,6 +606,7 @@ public class Admin_panel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -453,11 +616,17 @@ public class Admin_panel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable1_items;
     private javax.swing.JTable jTable2;
     private javax.swing.JPanel menu_panel;
     private java.util.List<javaapplication3.People> peopleList;
+    private java.util.List<javaapplication3.People> peopleList1;
+    private java.util.List<javaapplication3.People> peopleList2;
+    private java.util.List<javaapplication3.People> peopleList3;
     private javax.persistence.Query peopleQuery;
+    private javax.persistence.Query peopleQuery1;
+    private javax.persistence.Query peopleQuery2;
+    private javax.persistence.Query peopleQuery3;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
