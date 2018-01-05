@@ -87,7 +87,6 @@ public class Admin_panel extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         ADD_ppl_butt = new javax.swing.JButton();
-        Messege_ppl_add = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
 
@@ -340,15 +339,9 @@ public class Admin_panel extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addGap(34, 34, 34)
                         .addComponent(Name_ppl_Field, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Messege_ppl_add)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(ADD_ppl_butt, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(55, 55, 55)
+                .addComponent(ADD_ppl_butt, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -357,26 +350,20 @@ public class Admin_panel extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Messege_ppl_add)
-                        .addGap(41, 41, 41))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Name_ppl_Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(NIC_ppl_Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(ADD_ppl_butt, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Telephne_ppl_Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)))
+                .addGap(47, 47, 47)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Name_ppl_Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NIC_ppl_Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(ADD_ppl_butt, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Telephne_ppl_Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -397,9 +384,7 @@ public class Admin_panel extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         showpanel("card3");
-        Messege_ppl_add.setText(null);
-        Name_ppl_Field.setText(null);
-        NIC_ppl_Field.setText(null);// TODO add your handling code here:
+        clear_Fields();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -408,7 +393,10 @@ public class Admin_panel extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void ADD_ppl_buttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD_ppl_buttActionPerformed
-        if (!"".equals(Name_ppl_Field.toString())) {
+        String te="";
+        if (te.equals(Name_ppl_Field.getText())) {
+            JOptionPane.showMessageDialog(this, "Enter Values");
+        } else {
             Connection con = dataBaseConnection.dataBaseConnectionMethod();
             String query = " insert into people values (null,?,?,?,null,?)";
             PreparedStatement preparedStmt;
@@ -420,18 +408,15 @@ public class Admin_panel extends javax.swing.JFrame {
                 preparedStmt.setDate(4, java.sql.Date.valueOf(java.time.LocalDate.now()));
                 preparedStmt.execute();
                 preparedStmt.close();
-                Messege_ppl_add.setText("Successfully added");
-                Name_ppl_Field.setText(null);
-                NIC_ppl_Field.setText(null);
+                JOptionPane.showMessageDialog(this, "Successfully added");
+                clear_Fields();
 
             } catch (SQLException ex) {
                 Logger.getLogger(Admin_panel.class.getName()).log(Level.SEVERE, null, ex);
-                Messege_ppl_add.setText("Error occurd");
-                Name_ppl_Field.setText(null);
+                JOptionPane.showMessageDialog(this, "Error occurd");
+                clear_Fields();
             }
-        } else {
-            System.out.println("Error");
-        }      // TODO add your handling code here:
+        }
     }//GEN-LAST:event_ADD_ppl_buttActionPerformed
 
     private void Insert_buttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Insert_buttActionPerformed
@@ -546,6 +531,9 @@ public class Admin_panel extends javax.swing.JFrame {
         Quantity_field.setText(null);
         Warrenty_field.setText(null);
         Description_field.setText(null);
+        Name_ppl_Field.setText(null);
+        NIC_ppl_Field.setText(null);
+        Telephne_ppl_Field.setText(null);
     }
 
     public static void main(String args[]) {
@@ -586,7 +574,6 @@ public class Admin_panel extends javax.swing.JFrame {
     private javax.swing.JTextArea Description_field;
     private javax.swing.JTextField ID_field;
     private javax.swing.JButton Insert_butt;
-    private javax.swing.JLabel Messege_ppl_add;
     private javax.swing.JTextField NIC_ppl_Field;
     private javax.swing.JTextField Name_field;
     private javax.swing.JTextField Name_ppl_Field;

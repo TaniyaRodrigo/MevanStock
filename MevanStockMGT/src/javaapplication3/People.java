@@ -155,7 +155,7 @@ public class People implements Serializable {
 
     @Override
     public String toString() {
-        return "javaapplication3.People[ idpeople=" + idpeople + " ]";
+        return peopleName;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
